@@ -17,6 +17,11 @@ jobs:
         run: yarn lint
       - name: Run tests
         run: yarn test
+      - name: Upload test report
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: test.json
   build:
     needs: test
     runs-on: ubuntu-latest
@@ -45,5 +50,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: dist-files
+      - name: Output contents
+        run: ls
       - name: Deploy
         run: echo "Deploying..."

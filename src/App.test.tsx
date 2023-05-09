@@ -14,6 +14,6 @@ describe("My Component", () => {
 
     const button = screen.getByRole("button");
     await userEvent.click(button);
-    expect(screen.getByTestId("my-count")).toBeInTheDocument();
+    expect(screen.getByTestId("my-coun")).toBeInTheDocument();
   });
 });
