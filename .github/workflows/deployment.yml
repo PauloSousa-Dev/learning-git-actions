@@ -16,8 +16,10 @@ jobs:
       - name: Lint project
         run: yarn lint
       - name: Run tests
+        id: run-tests
         run: yarn test
       - name: Upload test report
+        if: failure() && steps.run-tests.outcome == 'failure'
         uses: actions/upload-artifact@v3
         with:
           name: test-report
