@@ -6,15 +6,8 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: Cache yarn dependencies
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: "**/node_modules"
-          key: node-modules-${{hashFiles('**/yarn.lock')}}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn
+      - name: Load & cache dependencies
+        uses: ./.github/actions/cached-deps
       - name: Lint project
         run: yarn lint
       - name: Run tests
@@ -32,15 +25,10 @@ jobs:
     steps:
       - name: Get code
         uses: actions/checkout@v3
-      - name: Cache yarn dependencies
-        uses: actions/cache@v3
-        id: cache
+      - name: Load & cache dependencies
+        uses: ./.github/actions/cached-deps
         with:
-          path: "**/node_modules"
-          key: node-modules-${{hashFiles('**/yarn.lock')}}
-      - name: Install dependencies
-        if: steps.cache.outputs.cache-hit != 'true'
-        run: yarn
+          caching: "false"
       - name: Build project
         run: yarn build
       - name: Upload artifacts
